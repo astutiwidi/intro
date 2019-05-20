@@ -33,10 +33,13 @@ head(mtcars) # melihat 6 baris pertama dari data mtcars, mtcars adalah data bawa
 
 Jika ingin menjalankan kode R dalam *chunck* tersebut, Anda dapat menggunakan pemintas Ctrl + Enter (menjalankan satu baris kode) atau Ctrl + Shift + Enter (menjalankan semua kode dalam *chunck*). Sekarang buatlah *chunck* baru yang isinya adalah baris kode R berikut: (Petunjuk: Gunakan Ctrl + Alt + I)
 
+
+```{r}
 filled.contour(volcano,
                color.palette = terrain.colors, 
                plot.title = title("Topografi Gunung Maunga Whau"), 
                key.title = title("Tinggi\n(meter)"))
+```
 
 Setelah selesai membuat dokumen R Markdown yang berisikan konten tulisan beserta kode R, Anda dapat klik tombol **Knit** untuk menghasilkan dokumen baru sesuai dengan format dokumen yang diinginkan. Dalam contoh ini format dokumen keluaran R Markdown setelah menjalankan **Knit** adalah dokumen HTML. Anda dapat mengatur format dokumen keluaran dengan cara mengubah baris *output* pada YAML metadata (lihat baris paling atas dokumen ini) seperti contoh berikut:
 
@@ -58,7 +61,7 @@ Struktur data pada R dapat dikategorikan berdasarkan dimensi dan homogenitas dar
 ```{r}
 c(1, 2, 3, 4)
 c("r", "academy", "telkom", "university")
-list(15, "r", "TRUE", 24L)
+list(15, "r", TRUE, 24L) #15 double, 24L integer
 
 huruf_vokal <- c("a", "i", "u", "e", "o") # objek data tersimpan dengan nama 'huruf_vokal', namun tidak tercetak pada konsol
 huruf_vokal # mencetak objek data dengan nama 'huruf_vokal' pada konsol
@@ -67,10 +70,10 @@ huruf_vokal # mencetak objek data dengan nama 'huruf_vokal' pada konsol
 Jenis dari data dapat diketahui dengan menggunakan fungsi `typeof()`. Dapatkah Anda mengetahui jenis data dari 'huruf_vokal' diatas? Bagaimana jika Anda membuat objek data dengan menggunakan fungsi `c()` namun jenis elemennya berbeda-beda? Dapatkah Anda menjelaskannya? Isilah '___' dengan jawaban yang sesuai!
 
 ```{r}
-___(huruf_vokal)
+typeof(huruf_vokal)
 
 beragam <- c(2.7, "berbeda", TRUE, 4L) # 2.7 bertipe double, "berbeda" bertipe character, TRUE bertipe logical, 4L bertipe integer
-typeof(___) # cek tipe dari objek data dengan nama 'beragam'
+typeof(beragam) # cek tipe dari objek data dengan nama 'beragam'
 ```
 
 Struktur data dua dimensi merupakan yang paling banyak digunakan di R, yaitu matrix dan dataframe yang dapat dibuat dengan menggunakan fungsi `matrix()` dan `data.frame()`. Kedua data tersebut umumnya jarang dibuat secara langsung di R, notabene berasal dari berkas luar atau merupakan hasil dari penggunaan fungsi. Prinsipnya suatu dataframe merupakan gabungan dari beberapa data satu dimensi dengan jumlah yang sama, umumnya adalah *atomic vectors*. Menurut Anda, dapatkah suatu frame tersusun atas beberapa *list* dengan jumlah yang sama?
@@ -82,34 +85,41 @@ Fungsi memiliki tugas utama untuk mengolah suatu *input* menjadi *output*. Anda 
 
 ```{r}
 iris # mencetak data di konsol
-dim(iris) # ___
-str(iris) # ___
-colnames(iris) # ___
-head(iris) # ___
-head(iris, 10) # ___
-tail(iris) # ___
-tail(iris, 10) # ___
-summary(iris) # ___
+dim(iris) # mengetahui dimensi dari object iris
+str(iris) # mengeluarkan struktur data dari objek iris
+colnames(iris) # mengeluarkan nama kolom dari objek iris
+head(iris) # mengeluarkan bagian awal dari objek iris, defaultnya 6 baris
+head(iris, 10) # mengeluarkan 10 bagian awal dari objek iris
+tail(iris) # mengeluarkan bagian akhir dari objek iris
+tail(iris, 10) # mengeluarkan 10 bagian akhir dari objek iris
+summary(iris) # mengeluarkan rangkuman data dari objek iris (min, max, quartil untuk tiap kolom)
 iris[1, ] # subset data pada baris 1
-iris[c(1, 6, 12),] # ___
+iris[c(1, 6, 12),] # mengetahui subset data pada row ke 1, 6,12
 iris[ ,2] # subset atau ekstrak data pada kolom 2
-iris[2,2] # ___
+iris[ ,2, drop=FALSE] # subset atau ekstrak data pada kolom 2 dengan TETAP menjaga bentuk datanya
+iris[2,2] # subset atau ekstrak data pada row ke-2, kolom 2
+class(iris[2,2,drop=FALSE]) # melihat kelas data sesungguhnya pada row ke-2, kolom 2
 iris$Sepal.Length # ekstrak data pada kolom 'Sepal.Length'
-class(iris$Species) # ___
-length(iris$Petal.Width) # ___
-levels(iris$Species) # ___
-length(levels(iris$Species)) # ___
-unique(iris$Species) # ___
-length(unique(iris$Species)) # ___
-mean(iris$Sepal.Length) # ___
-sd(iris$Sepal.Length) # ___
-median(iris$Sepal.Width) # ___
-sum(iris$Petal.Length) # ___
-plot(iris) # ___
-cor(iris[, -5]) # ___
-write.csv(iris, file = "iris.csv", row.names = FALSE) # ___
+class(iris$Species) # melihat kelas dari objek iris
+length(iris$Petal.Width) # melihat panjang dari kolom petal.width
+levels(iris$Species) # melihat apa saja elemen dalam sebuah factor
+length(levels(iris$Species)) # melihat ada berapa elemen dalam sebuah faktor
+unique(iris$Species) # mengeluarkan elemen apa saja (unik)dari kolom spesies
+length(unique(iris$Species)) # mengeluarkan berapa juumlah elemen unik dari kolom spesies
+mean(iris$Sepal.Length) # menghitung rata-rata data di kolom sepal.length
+sd(iris$Sepal.Length) # menghitung standar deviasi data di kolom sepal.length
+median(iris$Sepal.Width) # menghitung median data di kolom sepal.length
+sum(iris$Petal.Length) # menghitung hasil penjumlahan data di kolom sepal.length
+plot(iris) # memplot data dalam objek iris
+cor(iris[, -5]) # membuat matrix covariance dari iris
+write.csv(iris, file = "iris.csv", row.names = FALSE) # membuat file iris.csv dari data iris
 ```
 
 Dari catatan ringkas mengenai fungsi-fungsi di atas, dapatkah Anda menebak mana fungsi yang berjenis '*changing the environment*' dan mana yang berjenis '*calculating value*'?
+Yang plot(iris) dan write.csv termasuk changing the environment, yang lainnya claculating value. 
+
+Assignment nilai bisa pake <-, ->, atau =. Tapi lebih baik konsisten <-.
+
+
 
 Sekarang Anda dipersilakan untuk menekan tombol **Knit** (Ctrl + Shift + K) untuk menghasilkan dokumen html dari dokumen R Markdown ini. 
