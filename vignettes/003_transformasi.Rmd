@@ -3,16 +3,7 @@ title: "Transformasi Data"
 author: "Muhammad Aswan Syahputra"
 date: "4/9/2019"
 output:
-  html_document: 
-    df_print: default
-    fig_height: 6
-    fig_width: 9
-    highlight: textmate
-    keep_md: yes
-    theme: yeti
-    toc: yes
-    toc_collapsed: yes
-    toc_float: yes
+  github_document
 editor_options: 
   chunk_output_type: inline
 ---
@@ -26,7 +17,7 @@ knitr::opts_chunk$set(echo = TRUE)
 Anda akan menggunakan fungsi `spread` dari paket `tidyr` untuk mengubah memperbaiki dataset 'table2' (juga dari paket `tidyr`). Aktifkanlah paket `tidyr`, lihat dataset 'table2'. Apakah yang membuat dataset tersebut *non-tidy* data? Bukalah dokumentasi fungsi `spread` dengan menjalankan `?nama_fungsi` atau `help(nama_fungsi)`!
 
 ```{r}
-___(tidyr)
+library(tidyr)
 table2
 ```
 
@@ -39,7 +30,7 @@ table2_tidy <- spread(table2, key = "type", value = "count")
 Selanjutnya Anda juga akan memperbaiki dataset 'table4a'. Cetaklah dataset tersebut dan dapatkah Anda menyebutkan alasan mengapa dataset tersebut tidak *tidy* dan *tame*?
 
 ```{r}
-___ # cetak dataset table4a
+table4a # cetak dataset table4a
 ```
 
 Dataset 'table4a' dapat diperbaiki dengan menggunakan fungsi `gather` dari `tidyr`. Anda dapat mempelajari fungsi tersebut dengan menjalankan `?gather`.
@@ -55,15 +46,18 @@ Silakan lakukan hal serupa pada dataset 'table4b' namun dengan menggunakan "popu
 
 ```{r}
 table4b
+table4b_tidy <- table4b %>%
+   gather(key = "year", value = "population", 2:3)
 
-table4b_tidy <- ___
+table4b_tidy
 ```
 
 Dataset 'table4a_tidy' dan 'table4b_tidy' tersebut dapat digabungkan menjadi satu dataset. Hal tersebut dapat dilakukan dengan menggunakan fungsi `left_join` dari paket `dplyr` seperti contoh berikut:
 
 ```{r}
-___ # mengaktifkan paket dplyr
+library(dplyr) # mengaktifkan paket dplyr
 mydata <- left_join(table4a_tidy, table4b_tidy)
+mydata
 ```
 
 
@@ -72,8 +66,8 @@ mydata <- left_join(table4a_tidy, table4b_tidy)
 Dataset mydata tersebut merupakan subset dataset Tubercolusis yang diolah dari data 'who' dan 'population' (dari paket `tidyr`). Lihatlah ringkasan kedua tersebut dengan menggunakan `glimpse`!
 
 ```{r}
-___(who)
-___(population)
+glimpse(who)
+glimpse(population)
 ```
 
 Sekarang kita akan membuat versi utuh dari dataset 'mydata' dengan menggunakan data seluruh negara pada dataset 'who' sebagai berikut:
@@ -105,18 +99,19 @@ tb_all <-
 
 Dapatkah Anda membuat ringkasan apa saja hal apa saja yang dilakukan pada proses *data wrangling* diatas? (Petunjuk: `?nama_fungsi`)
 
-1. ...
-2. ...
-3. ...
-4. ...
-5. ...
-6. ...
-7. ...
-8. ...
+1. gather: membuat nama kolom menjadi data karena kita melihat bahwa ada nama kolom yang seharusnya merupakan data
+2. select : memilih kolom yang dianggap perlu
+3. group_by : mengubah tabel menjadi sebuah grouped table yang memudahkan operasi secara grup
+4. summarise : merangkum data. Pada kasus ini, merangkum jumlah case untuk tahun dan negara yang sama , kemudian fungsi na.rm digunakan untuk menanganimissing value
+5. ungroup: menghilangkan grouping yang dilakukan oleh group_by
+6. left_join ;menggabungkan dua tabel ke dalam 1 tabel
+7. filter: memilih baris data yang memenuhi kondisi tertentu. Dalam kasus ini, baris yang kolom populasinya tidak na
+8. mutate ; menambahkan kolom baru, dalam kasus ini kolom proporsion, yang berisi 100x cases/population
 
 Cek apakah dataset 'tb8' sama dengan dataset 'tb_all'! Menurut Anda, cara penulisan *syntax* manakah yang lebih mudah digunakan dan dipahami?
+Kedua data tsb sama. yang tb_all lebih rapi penulisannya, tapi perlu pembiasaan
 
 ```{r}
-___(tb8, tb_all)
+identical(tb8, tb_all)
 ```
 
