@@ -63,7 +63,7 @@ dari `tidyr`. Anda dapat mempelajari fungsi tersebut dengan menjalankan
 `?gather`.
 
 ``` r
-gather(table4a, key = "year", value = "case", 2:3)
+gather(table4a, key = "year", value = "case", 2:3) #2:3 = kolom 2 sampai 3. kalau tidak berurut: c(1,3)
 ```
 
     ## # A tibble: 6 x 3
@@ -99,7 +99,7 @@ table4b
 
 ``` r
 table4b_tidy <- table4b %>%
-   gather(key = "year", value = "population", 2:3)
+   gather(key = "year", value = "population", 2:3) #bisa juga pake tanda -country
 
 table4b_tidy
 ```

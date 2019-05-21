@@ -36,7 +36,7 @@ table4a # cetak dataset table4a
 Dataset 'table4a' dapat diperbaiki dengan menggunakan fungsi `gather` dari `tidyr`. Anda dapat mempelajari fungsi tersebut dengan menjalankan `?gather`.
 
 ```{r}
-gather(table4a, key = "year", value = "case", 2:3)
+gather(table4a, key = "year", value = "case", 2:3) #2:3 = kolom 2 sampai 3. kalau tidak berurut: c(1,3)
 
 table4a_tidy <- table4a %>% 
   gather(key = "year", value = "cases", 2:3) # menggunakan tidyverse syntax, pipe %>%
@@ -47,7 +47,7 @@ Silakan lakukan hal serupa pada dataset 'table4b' namun dengan menggunakan "popu
 ```{r}
 table4b
 table4b_tidy <- table4b %>%
-   gather(key = "year", value = "population", 2:3)
+   gather(key = "year", value = "population", 2:3) #bisa juga pake tanda -country
 
 table4b_tidy
 ```
